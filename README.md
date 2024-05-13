@@ -27,7 +27,7 @@ The two main functions implemented in the package so far are ```CME_KSAT``` and 
 ```
 In its first version, the package works for models on hipergraphs where there is only one configuration in the factor nodes that unsatisfies the interaction (K-SAT like). This contains as a particular case a model with pairwise interactions (2-SAT like) 
 
-## How to provide the graph?
+## How to provide a graph?
 
 
 
@@ -54,7 +54,19 @@ To build the rest of the arguments the user should use the function
         rarg_build(graph::HGraph, st::State_CME, ch_u::Vector{Int64}, rargs_cst...)
         rarg_build(graph::HGraph, st::State_CDA, ch_u::Vector{Int64}, rargs_cst...)
 ```
-The first argument is the graph, with all the associated information (see previous section). The third argument is a vector ```ch_u[i]```, with $i=1,\ldots, M$, where $M$ is the number of factor nodes of the hipergraph. Each element of the vector is  
+The first argument is the graph, with all the associated information (see previous section). 
+
+The second argument is a ```struct``` with the following information:
+
+```julia 
+mutable struct State_CME
+    p_cav::Array{Float64, 4}     # cavity conditional probabilities. p_cav[hyperedge, site_cond, s_cond, chain]
+    probi::Vector{Float64}
+    pu::Array{Float64, 3}
+end
+```
+
+The third argument is a vector ```ch_u[i]```, with $i=1,\ldots, M$, where $M$ is the number of factor nodes of the hipergraph. Each element of the vector is  
 
 The package implements an example and gives the user access to it. The  
 
