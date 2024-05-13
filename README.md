@@ -151,7 +151,7 @@ end
 
 ## 5. How to numerically integrate?
 
-Some simple examples are written in the file "package_dir/test/runtests.jl"
+A simple example is written in the file "package_dir/test/runtests.jl"
 
 ```julia 
 using ApproxMasEq
@@ -172,6 +172,12 @@ rargs = [eta]
 answ_CME = CME_KSAT(rf, rargs, build_args_rate_FMS, N=N, K=K, alpha=alpha)
 answ_CDA = CDA_KSAT(rf, rargs, build_args_rate_FMS, N=N, K=K, alpha=alpha)
 ```
+
+Here, a hypergraph with $N=10$ nodes, $K=3$ node per hyperedge and mean connectivity $c=\alpha K = 6$ is randomly built with seed=1.
+
+The model is the one shown in Section 4: Focused Metropolis Search algorithm in K-SAT. The constant argument for the transition rates is eta=1 ($\eta=1$)
+
+The 
 
 ## 6. Accessing the results
 
