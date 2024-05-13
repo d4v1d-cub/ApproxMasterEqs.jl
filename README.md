@@ -49,26 +49,35 @@ The structure of 'ratefunc' must fit the following
 ```
 where ```Ep``` is the local energy when the variable is positive $(\sigma=1)$ and ```Em``` is the local energy when the variable is negative $(\sigma=-1)$. 
 
-To build the rest of the arguments the user should use the function 
-```julia 
-        rarg_build(graph::HGraph, st::State_CME, ch_u::Vector{Int64}, rargs_cst...)
-        rarg_build(graph::HGraph, st::State_CDA, ch_u::Vector{Int64}, rargs_cst...)
-```
-The first argument is the graph, with all the associated information (see previous section). 
 
+To build the rest of the arguments the user should use a function like 
+```julia 
+        rarg_build(graph::HGraph, st::State_CME, rargs_cst...)
+        rarg_build(graph::HGraph, st::State_CDA, rargs_cst...)
+```
+The first argument is the graph, with all the associated information (see previous section).
 The second argument is a ```struct``` with the following information:
 
 ```julia 
 mutable struct State_CME
-    p_cav::Array{Float64, 4}     # cavity conditional probabilities. p_cav[hyperedge, site_cond, s_cond, chain]
-    probi::Vector{Float64}
-    pu::Array{Float64, 3}
+    p_cav::Array{Float64, 4}     # cavity conditional probabilities p_cav[hyperedge, site_cond, s_cond, chain]
+    probi::Vector{Float64}       # single-site probabilities probi[node]
+    pu_cond::Array{Float64, 3}   # cavity conditional probabilities of partially unsatisfied
+                                 # hyperedges pu_cond[hyperedge, site_cond, s_cond]
+    p_joint_u::Vector{Float64}   # probability of having the hyperedge unsatisfied p_joint_u[hyperedge]
 end
 ```
 
-The third argument is a vector ```ch_u[i]```, with $i=1,\ldots, M$, where $M$ is the number of factor nodes of the hipergraph. Each element of the vector is  
+```julia 
+mutable struct State_CDA
+    p_joint::Matrix{Float64}     # joint probabilities p_joint[hyperedge, chain]
+    pu_cond::Array{Float64, 3}   # conditional probabilities of partially unsatisfied
+                                 # hyperedges pu_cond[hyperedge, site_cond, s_cond]
+    p_joint_u::Vector{Float64}   # probability of having the hyperedge unsatisfied p_joint_u[hyperedge]
+end
+```
+All the other constant arguments of the transition rates must go into ``` rargs_cst... ```
 
-The package implements an example and gives the user access to it. The  
 
 ## How to numerically integrate?
 
