@@ -37,17 +37,24 @@ mutable struct HGraph
         N::Int64                                   # number of variable nodes
         M::Int64                                   # number of hyperedges
         K::Int64                                   # number of nodes in each hyperedge
-        chains_he::Int64                           # storing 2^K in memory will be useful
         var_2_he::Array{Array{Int64, 1}, 1}        # list of hyperedges for each variable
         he_2_var::Matrix{Int64}                    # list of variables per hyperedge
         degrees::Vector{Int64}                     # list of variable nodes' degrees
-        nchains::Vector{Int64}                     # list equal to 2.^{degrees}
         nodes_in::Array{Dict{Int64, Int64}, 1}     # dictionary with key=node_index and val=place_in_he
-        nodes_except::Array{Int64, 3}              # this list stores, for each hyperedge 'he' and each 
-                                                   # node 'i' in the hyperedge, the other nodes 'he \ i' 
-        place_there::Array{Dict{Int64, Int64}, 2}  # for each hyperedge and each variable, dictionary with
-                                                   # key = node and value = place in nodes_except[he, var_index]
+        #.......
 end
+```
+that can be initialized with
+
+```julia
+build_HGraph(var_2_he::Array{Array{Int64, 1}, 1} , he_2_var::Matrix{Int64}, degrees::Vector{Int64})
+```
+
+There is a couple of implemented examples
+
+```julia
+build_RR_HGraph(N::Int64, c::Int64, K::Int64, idum::Int64=rand(1:typemax(Int64)))
+build_ER_HGraph(N::Int64, c::Union{Float64, Int64}, K::Int64, idum::Int64=rand(1:typemax(Int64)))
 ```
 
 ## How to provide a model?
