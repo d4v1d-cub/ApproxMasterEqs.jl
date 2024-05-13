@@ -187,7 +187,7 @@ At this point, the user should be able to run a simple example and collect the o
 
 To get other quantities the user should use callbacks. This is allowed by the package [DiffEqCallbacks](https://docs.sciml.ai/DiffEqCallbacks/stable/). A stopping condition is implemented by default that stops the integration when the energy goes below a given value ```eth```. This is also a parameter of the functions ```CME_KSAT``` and ```CDA_KSAT``` (```eth::Float64=1e-6```).
 
-The following example shows how to save the system's energy at each integration step, which is very useful in the context of K-SAT. This is implemented via a ```SavingCallback``` (see [here](https://docs.sciml.ai/DiffEqCallbacks/stable/output_saving/#DiffEqCallbacks.SavingCallback)). The general form of a function to be used as a callback is
+The following shows how to save some quantity at each integration step. This is implemented via a ```SavingCallback``` (see [here](https://docs.sciml.ai/DiffEqCallbacks/stable/output_saving/#DiffEqCallbacks.SavingCallback)). The general form of a function to be used as a callback is
 
 ```julia
 function save_something(u, t, integrator)
@@ -200,9 +200,58 @@ Thus, the package implements certain pre-defined requests for the numerical inte
 
 The user could:
 * ```get_graph(integrator)```  returns the ```graph::HGraph``` variable
-* 
+* ```reshape_u_to_probs_CME(u::Vector{Float64}, integrator)```  reshapes the vector $u$ to the probabilities involved in the CME: 'p_cav' and 'probi' (see Section 4).
+* ```reshape_u_to_probs_CDA(u::Vector{Float64}, integrator)```  reshapes the vector $u$ to the probability involved in the CDA: 'p_joint' (see Section 4).
+* ```get_pju_CME(u::Vector{Float64}, integrator)```  computes the probability of the unsatisfied configuration for each hyperedge in the CME (see Section 4).
+* ```get_pju_CDA(u::Vector{Float64}, integrator)```  computes the probability of the unsatisfied configuration for each hyperedge in the CDA (see Section 4).
 
- the integration will stop when the energy
+With this, the user can define a callback that, for example, saves the system's energy at each step of the CDA's integration:
+
+```julia
+function save_ener_CDA(u, t, integrator)
+    p_joint_u = get_pju_CDA(u, integrator)
+    e = ener(p_joint_u)
+    return e
+end
+```
+where ```ener()``` is simply
+
+```julia
+function ener(p_joint_u::Vector{Float64})
+    e = 0.0
+    for he in eachindex(p_joint_u)
+        e += p_joint_u[he]
+    end
+    return e
+end
+```
+
+The numerical integration that saves the energy at each step can be performed by running:
+
+```julia
+using ApproxMasEq
+using OrdinaryDiffEq, DiffEqCallbacks, Sundials
+
+N = 100
+alpha = 3.5
+K = 3
+
+eta = 0.7
+rargs = [eta]
+
+t0 = 0.0
+tlim = 10.0
+
+saved_eners_CDA = SavedValues(Float64, Float64)
+cb_ener_CDA = SavingCallback(save_ener_CDA, saved_eners_CDA)
+cbs_save_CDA = CallbackSet(cb_ener_CDA)
+
+answ = CDA_KSAT(rate_FMS_KSAT, rargs, build_args_rate_FMS, N=N, K=K, alpha=alpha, tspan=[t0, tlim], cbs_save=cbs_save_CDA)
+```
+where the callback is passed as a parameter. The function receives a ```CallbackSet```, so different callbacks can be passed at once, via the argument
+```cbs_save::CallbackSet=CallbackSet()```. In the line ```cbs_save_CDA = CallbackSet(cb_ener_CDA)``` the custom callback is cast to an object of type ```CallbackSet``` and then put as an argument of ```CDA_KSAT```.
+
+Something analogous can be done for the function ```CME_KSAT```
 
 
 ## References
