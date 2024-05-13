@@ -25,6 +25,11 @@ The two main functions implemented in the package so far are ```CME_KSAT``` and 
          tspan::Vector{Float64}=[0.0, 1.0], p0::Float64=0.5, method=Tsit5, eth::Float64=1e-6,
          cbs_save::CallbackSet=CallbackSet(), dt_s::Float64=0.1, abstol::Float64=1e-6, reltol::Float64=1e-3)
 ```
+In its first version, the package works for models on hipergraphs where there is only one configuration in the factor nodes that unsatisfies the interaction (K-SAT like). This contains as a particular case a model with pairwise interactions (2-SAT like) 
+
+## How to provide the graph?
+
+
 
 ## How to provide a model?
 
@@ -42,10 +47,16 @@ The structure of 'ratefunc' must fit the following
 ```julia 
         ratefunc(Ep::Int64, Em::Int64, rateargs...)
 ```
+where ```Ep``` is the local energy when the variable is positive $(\sigma=1)$ and ```Em``` is the local energy when the variable is negative $(\sigma=-1)$. 
+
+To build the rest of the arguments the user should use the function 
+```julia 
+        rarg_build(graph::HGraph, st::State_CME, ch_u::Vector{Int64}, rargs_cst...)
+        rarg_build(graph::HGraph, st::State_CDA, ch_u::Vector{Int64}, rargs_cst...)
+```
+The first argument is the graph, with all the associated information (see previous section). The third argument is a vector ```ch_u[i]```, with $i=1,\ldots, M$, where $M$ is the number of factor nodes of the hipergraph. Each element of the vector is  
 
 The package implements an example and gives the user access to it. The  
-
-## How to provide the graph?
 
 ## How to numerically integrate?
 
