@@ -53,8 +53,8 @@ build_HGraph(var_2_he::Array{Array{Int64, 1}, 1} , he_2_var::Matrix{Int64}, degr
 There is a couple of implemented examples
 
 ```julia
-build_RR_HGraph(N::Int64, c::Int64, K::Int64, idum::Int64=rand(1:typemax(Int64)))
-build_ER_HGraph(N::Int64, c::Union{Float64, Int64}, K::Int64, idum::Int64=rand(1:typemax(Int64)))
+build_RR_HGraph(N::Int64, c::Int64, K::Int64, idum::Int64=rand(1:typemax(Int64)))          # Random Regular Graphs
+build_ER_HGraph(N::Int64, c::Union{Float64, Int64}, K::Int64, idum::Int64=rand(1:typemax(Int64)))  #Erdös-Rényi
 ```
 
 ## How to provide a model?
