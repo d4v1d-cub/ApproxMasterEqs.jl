@@ -165,21 +165,21 @@ p0 = 0.5
 seed = 1
 
 eta = 1.0
-alg_str = "FMS"
-rf = rate_FMS_KSAT
 rargs = [eta]
 
-answ_CME = CME_KSAT(rf, rargs, build_args_rate_FMS, N=N, K=K, alpha=alpha)
-answ_CDA = CDA_KSAT(rf, rargs, build_args_rate_FMS, N=N, K=K, alpha=alpha)
+answ_CME = CME_KSAT(rate_FMS_KSAT, rargs, build_args_rate_FMS, N=N, K=K, alpha=alpha)
+answ_CDA = CDA_KSAT(rate_FMS_KSAT, rargs, build_args_rate_FMS, N=N, K=K, alpha=alpha)
 ```
 
 Here, a hypergraph with $N=10$ nodes, $K=3$ node per hyperedge and mean connectivity $c=\alpha K = 6$ is randomly built with seed=1.
 
-The model is the one shown in Section 4: Focused Metropolis Search algorithm in K-SAT. The constant argument for the transition rates is eta=1 ($\eta=1$)
+The model is the one in the example of Section 4: Focused Metropolis Search algorithm in K-SAT. The constant argument for the transition rates is eta=1 ($\eta=1$). 
 
-The 
+The parameter p0 is the probability used for generating the initial conditions. Every variable is set to 1 or -1 with $p(1) = 1-p(-1) = p_0$.
 
 ## 6. Accessing the results
+
+
 
 ## References
 
