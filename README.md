@@ -183,8 +183,9 @@ Other keyword arguments that can be specified before the numerical integration:
 
 ## 6. Accessing the results
 
-At this point, the user should be able to run a simple example and collect the output of the functions ```CME_KSAT``` or ```CDA_KSAT```. These functions return an object of type ```SciMLBase.ODESolution``` (see [here](https://docs.sciml.ai/DiffEqDocs/stable/types/ode_types/#Solution-Type))
+At this point, the user should be able to run a simple example and collect the output of the functions ```CME_KSAT``` or ```CDA_KSAT```. These functions return an object of type ```SciMLBase.ODESolution``` (see [here](https://docs.sciml.ai/DiffEqDocs/stable/types/ode_types/#Solution-Type)) with the solution saved in ```tspan``` sampled at intervals of length ```dts```. The latter is a parameter of the functions ```CME_KSAT``` and ```CDA_KSAT``` (```dt_s::Float64=0.1```).
 
+To get other quantities the user should use callbacks. This is allowed by the package [DiffEqCallbacks](https://docs.sciml.ai/DiffEqCallbacks/stable/).
 ```eth::Float64=1e-6``` the integration will stop when the energy
 
 
