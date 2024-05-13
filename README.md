@@ -195,12 +195,11 @@ function save_something(u, t, integrator)
      return #something
 end
 ```
-cb()
 
-For this purpose, the package implements certain pre-defined requests to the numerical integrator. 
+Thus, the package implements certain pre-defined requests for the numerical integrator. 
 
 The user could:
-* ```get_graph(integrator)```  returns the graph::HGraph
+* ```get_graph(integrator)```  returns the ```graph::HGraph``` variable
 * 
 
  the integration will stop when the energy
