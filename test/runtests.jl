@@ -9,12 +9,10 @@ p0 = 0.5
 seed = 1
 
 eta = 1.0
-alg_str = "FMS"
-rf = rate_FMS_KSAT
 rargs = [eta]
 
-answ_CME = CME_KSAT(rf, rargs, build_args_rate_FMS, N=N, K=K, alpha=alpha)
-answ_CDA = CDA_KSAT(rf, rargs, build_args_rate_FMS, N=N, K=K, alpha=alpha)
+answ_CME = CME_KSAT(rate_FMS_KSAT, rargs, build_args_rate_FMS, N=N, K=K, alpha=alpha)
+answ_CDA = CDA_KSAT(rate_FMS_KSAT, rargs, build_args_rate_FMS, N=N, K=K, alpha=alpha)
 
 @testset "ApproxMasEq.jl" begin
     
