@@ -160,22 +160,23 @@ using Test
 N = 10
 alpha = 2
 K = 3
-c = K * alpha
-p0 = 0.5
 seed = 1
 
 eta = 1.0
 rargs = [eta]
 
-answ_CME = CME_KSAT(rate_FMS_KSAT, rargs, build_args_rate_FMS, N=N, K=K, alpha=alpha)
-answ_CDA = CDA_KSAT(rate_FMS_KSAT, rargs, build_args_rate_FMS, N=N, K=K, alpha=alpha)
+answ_CME = CME_KSAT(rate_FMS_KSAT, rargs, build_args_rate_FMS, N=N, K=K, alpha=alpha, seed_g=seed)
+answ_CDA = CDA_KSAT(rate_FMS_KSAT, rargs, build_args_rate_FMS, N=N, K=K, alpha=alpha, seed_g=seed)
 ```
 
-Here, a hypergraph with $N=10$ nodes, $K=3$ node per hyperedge and mean connectivity $c=\alpha K = 6$ is randomly built with seed=1.
+Here, a hypergraph with $N=10$ nodes, $K=3$ node per hyperedge and mean connectivity $c=\alpha K = 6$ is randomly built with seed_g=1.
 
 The model is the one in the example of Section 4: Focused Metropolis Search algorithm in K-SAT. The constant argument for the transition rates is eta=1 ($\eta=1$). 
 
-The parameter p0 is the probability used for generating the initial conditions. Every variable is set to 1 or -1 with $p(1) = 1-p(-1) = p_0$.
+Other keyword arguments that can be specified before the numerical integration:
+* ```p0::Float=0.5``` is the probability for generating the initial conditions. Every variable is set to 1 or -1 with $p(1) = 1-p(-1) = p_0$.
+* ```tspan::Vector{Float64}=[0.0, 1.0]``` is the time interval for the integration.
+* ```method=VCABM()``` is the numerical method for the integration performed with the package OrdinaryDiffEqs. See the documentation [here](https://docs.sciml.ai/DiffEqDocs/dev/solvers/ode_solve/)
 
 ## 6. Accessing the results
 
