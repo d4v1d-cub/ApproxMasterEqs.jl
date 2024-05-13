@@ -25,11 +25,11 @@ The two main functions implemented in the package so far are ```CME_KSAT``` and 
          tspan::Vector{Float64}=[0.0, 1.0], p0::Float64=0.5, method=Tsit5, eth::Float64=1e-6,
          cbs_save::CallbackSet=CallbackSet(), dt_s::Float64=0.1, abstol::Float64=1e-6, reltol::Float64=1e-3)
 ```
-In its first version, the package works for models on hipergraphs where there is only one configuration in the factor nodes that unsatisfies the interaction (K-SAT like). This contains as a particular case a model with pairwise interactions (2-SAT like) 
+In its first version, the package works for models on hipergraphs where only one configuration in the factor nodes unsatisfies the interaction (K-SAT like). This contains as a particular case a model with pairwise interactions (2-SAT like) 
 
 ## How to provide a graph?
 
-
+The package 
 
 ## How to provide a model?
 
@@ -42,7 +42,7 @@ The information about the interactions goes into the transition rates. These are
                                       # at each integration step and then passed to 'ratefunc'
 ```
 
-The structure of 'ratefunc' must fit the following
+The structure of ```ratefunc``` must fit the following
 
 ```julia 
         ratefunc(Ep::Int64, Em::Int64, rateargs...)
@@ -78,6 +78,45 @@ end
 ```
 All the other constant arguments of the transition rates must go into ``` rargs_cst... ```
 
+The function ```rarg_build()``` must return a list of arguments ready to be inserted into the function ```ratefunc```
+
+As an example, let us see the implementation of the Focused Metropolis Search algorithm for K-SAT optimization
+
+```julia 
+# This function computes the energy in a K-SAT formula, where there is only one unsatisfied
+# configuration of the variables in a clause
+function ener(p_joint_u::Vector{Float64})
+    e = 0.0
+    for he in eachindex(p_joint_u)
+        e += p_joint_u[he]
+    end
+    return e
+end
+
+# This is the rate of FMS algorithm for KSAT
+function rate_FMS_KSAT(Ep::Int64, Em::Int64, eta::Float64, avE::Float64, K::Number, N::Int64)
+    dE = Em - Ep
+    if dE > 0
+        return Ep * N / K / avE * eta ^ dE
+    else
+        return Ep * N / K / avE
+    end
+end
+
+
+# Each rate function needs some specific arguments. The general form of these functions 
+function build_args_rate_FMS(graph::HGraph, st::State_CME, eta::Float64)
+    avE = ener(st.p_joint_u)
+    return eta, avE, graph.K, graph.N
+end
+
+
+# Each rate function needs some specific arguments. The general form of these functions 
+function build_args_rate_FMS(graph::HGraph, st::State_CDA, eta::Float64)
+    avE = ener(st.p_joint_u)
+    return eta, avE, graph.K, graph.N
+end
+```
 
 ## How to numerically integrate?
 
