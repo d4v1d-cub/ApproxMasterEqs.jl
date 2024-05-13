@@ -176,7 +176,7 @@ The model is the one in the example of Section 4: Focused Metropolis Search algo
 Other keyword arguments that can be specified before the numerical integration:
 * ```p0::Float=0.5``` is the probability for generating the initial conditions. Every variable is set to 1 or -1 with $p(1) = 1-p(-1) = p_0$.
 * ```tspan::Vector{Float64}=[0.0, 1.0]``` is the time interval for the integration.
-* ```method=VCABM()``` is the numerical method for the integration performed with the package OrdinaryDiffEqs. See the documentation [here](https://docs.sciml.ai/DiffEqDocs/dev/solvers/ode_solve/).
+* ```method=VCABM()``` is the numerical method for the integration performed with the package [OrdinaryDiffEqs](https://docs.sciml.ai/OrdinaryDiffEq/stable/). See the full list [here](https://docs.sciml.ai/DiffEqDocs/dev/solvers/ode_solve/).
 * ```abstol::Float64=1e-6``` absolute tolerance for the numerical integration with OrdinaryDiffEqs.
 * ```reltol::Float64=1e-6``` relative tolerance for the numerical integration with OrdinaryDiffEqs.
 
@@ -185,8 +185,11 @@ Other keyword arguments that can be specified before the numerical integration:
 
 At this point, the user should be able to run a simple example and collect the output of the functions ```CME_KSAT``` or ```CDA_KSAT```. These functions return an object of type ```SciMLBase.ODESolution``` (see [here](https://docs.sciml.ai/DiffEqDocs/stable/types/ode_types/#Solution-Type)) with the solution saved in ```tspan``` sampled at intervals of length ```dts```. The latter is a parameter of the functions ```CME_KSAT``` and ```CDA_KSAT``` (```dt_s::Float64=0.1```).
 
-To get other quantities the user should use callbacks. This is allowed by the package [DiffEqCallbacks](https://docs.sciml.ai/DiffEqCallbacks/stable/).
-```eth::Float64=1e-6``` the integration will stop when the energy
+To get other quantities the user should use callbacks. This is allowed by the package [DiffEqCallbacks](https://docs.sciml.ai/DiffEqCallbacks/stable/). A stopping condition is implemented by default that stops the integration when the energy goes below a given value ```eth```. This is also a parameter of the functions ```CME_KSAT``` and ```CDA_KSAT``` (```eth::Float64=1e-6```).
+
+The following example shows how to save the system's energy at each integration step, which is very useful in the context of K-SAT. This is implemented via a ```SavingCallback``` (see [here](https://docs.sciml.ai/DiffEqCallbacks/stable/output_saving/#DiffEqCallbacks.SavingCallback))
+
+ the integration will stop when the energy
 
 
 ## References
