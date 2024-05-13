@@ -29,7 +29,26 @@ In its first version, the package works for models on hipergraphs where only one
 
 ## How to provide a graph?
 
-The package 
+The package has its own implementation of hypergraph structures.
+
+```julia 
+mutable struct HGraph
+    # This structure holds the hypergraph information
+        N::Int64                                   # number of variable nodes
+        M::Int64                                   # number of hyperedges
+        K::Int64                                   # number of nodes in each hyperedge
+        chains_he::Int64                           # storing 2^K in memory will be useful
+        var_2_he::Array{Array{Int64, 1}, 1}        # list of hyperedges for each variable
+        he_2_var::Matrix{Int64}                    # list of variables per hyperedge
+        degrees::Vector{Int64}                     # list of variable nodes' degrees
+        nchains::Vector{Int64}                     # list equal to 2.^{degrees}
+        nodes_in::Array{Dict{Int64, Int64}, 1}     # dictionary with key=node_index and val=place_in_he
+        nodes_except::Array{Int64, 3}              # this list stores, for each hyperedge 'he' and each 
+                                                   # node 'i' in the hyperedge, the other nodes 'he \ i' 
+        place_there::Array{Dict{Int64, Int64}, 2}  # for each hyperedge and each variable, dictionary with
+                                                   # key = node and value = place in nodes_except[he, var_index]
+end
+```
 
 ## How to provide a model?
 
