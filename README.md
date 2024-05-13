@@ -3,7 +3,7 @@
 [![Build Status](https://github.com/d4v1d-cub/ApproxMasEq.jl/actions/workflows/CI.yml/badge.svg?branch=main)](https://github.com/d4v1d-cub/ApproxMasEq.jl/actions/workflows/CI.yml?query=branch%3Amain)
 
 
-## Instalation
+## 1. Instalation
 
 For now, the package is not an official Julia package. Therefore, the user should manually add it by running:
 
@@ -12,7 +12,7 @@ import Pkg
 Pkg.add("https://github.com/d4v1d-cub/ApproxMasEq.jl.git")
 ```
 
-## Description
+## 2. Description
 
 This is a package to perform the numerical integration of some Approximated Master Equations for the dynamics of binary variables in graphs. It contains two different methods: the Cavity Master Equation (CME) [[1]](#1) [[2]](#2) [[3]](#3) and the Conditional Dynamic Approximation (CDA) [[4]](#4). Provided a model and some network representing the interactions, the package estimates the local probabilities of observing a specific configuration of the variables at time $t$.
 
@@ -27,7 +27,7 @@ The two main functions implemented in the package so far are ```CME_KSAT``` and 
 ```
 In its first version, the package works for models on hipergraphs where only one configuration in the factor nodes unsatisfies the interaction (K-SAT like). This contains as a particular case a model with pairwise interactions (2-SAT like) 
 
-## How to provide a graph?
+## 3. How to provide a graph?
 
 The package has its own implementation of hypergraph structures.
 
@@ -60,9 +60,9 @@ If the user does not provide a graph to the functions ```CME_KSAT``` or ```CDA_K
 
 The couplings or links for the K-SAT boolean formula can be input via the parameter ```links::Matrix{Float64}```. The indexes are ```links[he, i]``` with $he=1, \ldots, M$ and $i=1, \ldots, K$, where $M$ is the number of hyperedges in the graph. If the user does not input any matrix of links, the default is to randomly choose one.
 
-For a neat example see the end of section 
+For a neat example see the end of the Section 5 
 
-## How to provide a model?
+## 4. How to provide a model?
 
 The information about the interactions goes into the transition rates. These are related to the first three arguments of the functions ```CME_KSAT``` and ```CDA_KSAT```:
 
@@ -149,9 +149,31 @@ function build_args_rate_FMS(graph::HGraph, st::State_CDA, eta::Float64)
 end
 ```
 
-## How to numerically integrate?
+## 5. How to numerically integrate?
 
-## Accessing the results
+Some simple examples are written in the file "package_dir/test/runtests.jl"
+
+```julia 
+using ApproxMasEq
+using Test
+
+N = 10
+alpha = 2
+K = 3
+c = K * alpha
+p0 = 0.5
+seed = 1
+
+eta = 1.0
+alg_str = "FMS"
+rf = rate_FMS_KSAT
+rargs = [eta]
+
+answ_CME = CME_KSAT(rf, rargs, build_args_rate_FMS, N=N, K=K, alpha=alpha)
+answ_CDA = CDA_KSAT(rf, rargs, build_args_rate_FMS, N=N, K=K, alpha=alpha)
+```
+
+## 6. Accessing the results
 
 ## References
 
