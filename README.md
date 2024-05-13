@@ -58,8 +58,9 @@ build_ER_HGraph(N::Int64, c::Union{Float64, Int64}, K::Int64, idum::Int64=rand(1
 ```
 If the user does not provide a graph to the functions ```CME_KSAT``` or ```CDA_KSAT```, an empty graph is taken as default. The functions then expect to receive three numbers: $N$, $K$, and $\alpha$. These, together with the optional seed_g (seed for the random generator), are used to create an Erdös-Rényi hypergraph with size $N$, $K$ nodes per hyperedge and mean node connectivity $c=\alpha K$.
 
-The couplings or links for the K-SAT boolean formula can be input via the parameter ```links::Matrix{Float64}```. The indexes are ```links[he, i]``` with $he=1, \ldots, M$ and $i=1, \ldots, K$, where $M$ is the number of hyperedges in the graph.
+The couplings or links for the K-SAT boolean formula can be input via the parameter ```links::Matrix{Float64}```. The indexes are ```links[he, i]``` with $he=1, \ldots, M$ and $i=1, \ldots, K$, where $M$ is the number of hyperedges in the graph. If the user does not input any matrix of links, the default is to randomly choose one.
 
+For a neat example see the end of section 
 
 ## How to provide a model?
 
