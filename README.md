@@ -187,7 +187,21 @@ At this point, the user should be able to run a simple example and collect the o
 
 To get other quantities the user should use callbacks. This is allowed by the package [DiffEqCallbacks](https://docs.sciml.ai/DiffEqCallbacks/stable/). A stopping condition is implemented by default that stops the integration when the energy goes below a given value ```eth```. This is also a parameter of the functions ```CME_KSAT``` and ```CDA_KSAT``` (```eth::Float64=1e-6```).
 
-The following example shows how to save the system's energy at each integration step, which is very useful in the context of K-SAT. This is implemented via a ```SavingCallback``` (see [here](https://docs.sciml.ai/DiffEqCallbacks/stable/output_saving/#DiffEqCallbacks.SavingCallback))
+The following example shows how to save the system's energy at each integration step, which is very useful in the context of K-SAT. This is implemented via a ```SavingCallback``` (see [here](https://docs.sciml.ai/DiffEqCallbacks/stable/output_saving/#DiffEqCallbacks.SavingCallback)). The general form of a function to be used as a callback is
+
+```julia
+function save_something(u, t, integrator)
+     # compute something
+     return #something
+end
+```
+cb()
+
+For this purpose, the package implements certain pre-defined requests to the numerical integrator. 
+
+The user could:
+* ```get_graph(integrator)```  returns the graph::HGraph
+* 
 
  the integration will stop when the energy
 
