@@ -50,12 +50,16 @@ that can be initialized with
 build_HGraph(var_2_he::Array{Array{Int64, 1}, 1} , he_2_var::Matrix{Int64}, degrees::Vector{Int64})
 ```
 
-There is a couple of implemented examples
+There are a couple of implemented examples:
 
 ```julia
 build_RR_HGraph(N::Int64, c::Int64, K::Int64, idum::Int64=rand(1:typemax(Int64)))          # Random Regular Graphs
-build_ER_HGraph(N::Int64, c::Union{Float64, Int64}, K::Int64, idum::Int64=rand(1:typemax(Int64)))  #Erdös-Rényi
+build_ER_HGraph(N::Int64, c::Union{Float64, Int64}, K::Int64, idum::Int64=rand(1:typemax(Int64)))  # Erdös-Rényi
 ```
+If the user does not provide a graph to the functions ```CME_KSAT``` or ```CDA_KSAT```, an empty graph is taken as default. The functions then expect to receive three numbers: $N$, $K$, and $\alpha$. These, together with the optional seed_g (seed for the random generator), are used to create an Erdös-Rényi hypergraph with size $N$, $K$ nodes per hyperedge and mean node connectivity $c=\alpha K$.
+
+The couplings or links for the K-SAT boolean formula can be input via the parameter ```links::Matrix{Float64}```. The indexes are ```links[he, i]``` with $he=1, \ldots, M$ and $i=1, \ldots, K$, where $M$ is the number of hyperedges in the graph.
+
 
 ## How to provide a model?
 
