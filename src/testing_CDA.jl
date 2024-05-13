@@ -1,6 +1,6 @@
 include("./ApproxMasEq.jl")
 using .ApproxMasEq
-using OrdinaryDiffEq, DiffEqCallbacks
+using OrdinaryDiffEq, DiffEqCallbacks, Sundials
 
 # println(Threads.nthreads())
 
@@ -29,6 +29,8 @@ cb_ener_CDA = SavingCallback(save_ener_CDA, saved_eners_CDA)
 cbs_save_CDA = CallbackSet(cb_ener_CDA)
 
 tspan = [t0, tlim]
+
+method=CVODE_BDF(linear_solver = :GMRES)
 
 answ = CDA_KSAT(rf, rargs, build_args_rate_FMS, N=N, K=K, alpha=alpha, 
                 seed_g=seed, seed_l=seed, tspan=[t0, tlim], cbs_save=cbs_save_CDA, dt_s=1.0, 
