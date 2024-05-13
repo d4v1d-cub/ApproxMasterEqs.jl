@@ -22,10 +22,10 @@ The two main functions implemented in the package so far are ```CME_KSAT``` and 
          graph::HGraph=build_empty_graph(), N::Int64=0, K::Int64=0,
          alpha::Union{Float64, Int64}=0.0, seed_g::Int64=rand(1:typemax(Int64)),
          links::Matrix{Int8}=Matrix{Int8}(undef, 0, 0), seed_l::Int64=rand(1:typemax(Int64)), 
-         tspan::Vector{Float64}=[0.0, 1.0], p0::Float64=0.5, method=Tsit5, eth::Float64=1e-6,
+         tspan::Vector{Float64}=[0.0, 1.0], p0::Float64=0.5, method=VCABM(), eth::Float64=1e-6,
          cbs_save::CallbackSet=CallbackSet(), dt_s::Float64=0.1, abstol::Float64=1e-6, reltol::Float64=1e-3)
 ```
-In its first version, the package works for models on hipergraphs where only one configuration in the factor nodes unsatisfies the interaction (K-SAT like). This contains as a particular case a model with pairwise interactions (2-SAT like) 
+In its first version, the package works for models on hypergraphs where only one configuration in the factor nodes unsatisfies the interaction (K-SAT like). This contains as a particular case a model with pairwise interactions (2-SAT like) 
 
 ## 3. How to provide a graph?
 
