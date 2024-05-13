@@ -2,6 +2,16 @@
 
 [![Build Status](https://github.com/d4v1d-cub/ApproxMasEq.jl/actions/workflows/CI.yml/badge.svg?branch=main)](https://github.com/d4v1d-cub/ApproxMasEq.jl/actions/workflows/CI.yml?query=branch%3Amain)
 
+
+## Instalation
+
+For now, the package is not an official Julia package. Therefore, the user should manually add it by running:
+
+```julia
+import Pkg
+Pkg.add("https://github.com/d4v1d-cub/ApproxMasEq.jl.git")
+```
+
 ## Description
 
 This is a package to perform the numerical integration of some Approximated Master Equations for the dynamics of binary variables in graphs. It contains two different methods: the Cavity Master Equation (CME) [[1]](#1) [[2]](#2) [[3]](#3) and the Conditional Dynamic Approximation (CDA) [[4]](#4). Provided a model and some network representing the interactions, the package estimates the local probabilities of observing a specific configuration of the variables at time $t$.
@@ -18,7 +28,22 @@ The two main functions implemented in the package so far are ```CME_KSAT``` and 
 
 ## How to provide a model?
 
+The information about the interactions goes into the transition rates. These are related to the first three arguments of the functions ```CME_KSAT``` and ```CDA_KSAT```:
 
+```julia 
+        ratefunc::Function            # function that computes the transition rate
+        rargs_cst                     # constant arguments that 'ratefunc' will receive when evaluated
+        rarg_build::Function          # function that computes the non-constant arguments to be obtained
+                                      # at each integration step and then passed to 'ratefunc'
+```
+
+The structure of 'ratefunc' must fit the following
+
+```julia 
+        ratefunc(Ep::Int64, Em::Int64, rateargs...)
+```
+
+The package implements an example and gives the user access to it. The  
 
 ## How to provide the graph?
 
