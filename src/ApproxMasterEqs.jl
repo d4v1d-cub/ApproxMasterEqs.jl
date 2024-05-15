@@ -1,4 +1,4 @@
-module ApproxMasEq
+module ApproxMasterEqs
 
 using Random
 using OrdinaryDiffEq, DiffEqCallbacks
