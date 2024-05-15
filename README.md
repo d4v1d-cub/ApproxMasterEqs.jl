@@ -3,13 +3,13 @@
 [![Build Status](https://github.com/d4v1d-cub/ApproxMasEq.jl/actions/workflows/CI.yml/badge.svg?branch=main)](https://github.com/d4v1d-cub/ApproxMasEq.jl/actions/workflows/CI.yml?query=branch%3Amain)
 
 
-## 1. Instalation
+## 1. Installation
 
 For now, the package is not an official Julia package. Therefore, the user should manually add it by running:
 
 ```julia
 import Pkg
-Pkg.add("https://github.com/d4v1d-cub/ApproxMasEq.jl.git")
+Pkg.add("https://github.com/d4v1d-cub/ApproxMasterEqs.jl.git")
 ```
 
 ## 2. Description
