@@ -12,7 +12,7 @@ rargs = [eta]
 answ_CME = CME_KSAT(rate_FMS_KSAT, rargs, build_args_rate_FMS, N=N, K=K, alpha=alpha, seed_g=seed)
 answ_CDA = CDA_KSAT(rate_FMS_KSAT, rargs, build_args_rate_FMS, N=N, K=K, alpha=alpha, seed_g=seed)
 
-@testset "ApproxMasEq.jl" begin
+@testset "ApproxMasterEqs.jl" begin
     
     @test answ_CME.u[end][end] > 0 && answ_CME.u[end][end] < 1
     @test answ_CDA.u[end][end] > 0 && answ_CDA.u[end][end] < 1
