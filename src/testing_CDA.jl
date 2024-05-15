@@ -1,5 +1,5 @@
-include("./ApproxMasEq.jl")
-using .ApproxMasEq
+include("./ApproxMasterEqs.jl")
+using .ApproxMasterEqs
 using OrdinaryDiffEq, DiffEqCallbacks, Sundials
 
 
