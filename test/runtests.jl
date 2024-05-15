@@ -1,4 +1,4 @@
-using ApproxMasEq
+using ApproxMasterEqs
 using Test
 
 N = 10
